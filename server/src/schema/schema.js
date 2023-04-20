@@ -94,6 +94,24 @@ const mutation = new GraphQLObjectType({
         return User.findByIdAndRemove(args.id);
       },
     },
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        return User.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              name: args.name,
+            },
+          },
+          { new: true }
+        );
+      },
+    },
     addPost: {
       type: PostType,
       args: {
@@ -116,6 +134,24 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return Post.findByIdAndRemove(args.id);
+      },
+    },
+    updatePost: {
+      type: PostType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        content: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        return Post.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              content: args.content,
+            },
+          },
+          { new: true }
+        );
       },
     },
   }),
